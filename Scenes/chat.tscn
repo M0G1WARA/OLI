@@ -1,0 +1,40 @@
+[gd_scene load_steps=2 format=3 uid="uid://b2juxdcs72sgg"]
+
+[ext_resource type="Script" path="res://Scenes/chat.gd" id="1_pheuq"]
+
+[node name="Chat" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pheuq")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Mensaje" type="TextEdit" parent="VBoxContainer"]
+custom_minimum_size = Vector2(480, 80)
+layout_mode = 2
+placeholder_text = "Mensaje"
+
+[node name="Enviar" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Enviar"
+
+[node name="Pensamiento" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Pensamiento"
+
+[node name="Respuesta" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Respuesta"
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[connection signal="text_changed" from="VBoxContainer/Mensaje" to="." method="_on_mensaje_text_changed"]
+[connection signal="pressed" from="VBoxContainer/Enviar" to="." method="_on_enviar_pressed"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]
