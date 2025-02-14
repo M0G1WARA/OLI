@@ -4,10 +4,13 @@ var dragging:bool = false
 var chat_window:bool = false
 var moving:bool = false
 var direction:String = "left"
+var menu_window:bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	$PopupMenu.add_item("Opciones", 1)
+	$PopupMenu.add_item("Salir", 2)
+	$PopupMenu.connect("id_pressed",_on_menu_option_selected)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -21,19 +24,23 @@ func _input(event):
 		get_tree().root.position = DisplayServer.mouse_get_position() - (DisplayServer.window_get_size()/2)
 
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			dragging = true
-			moving = false
-		else:
-			dragging = false
-			if not chat_window:
-				$Timer.start()
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			if event.double_click:
+				$PopupMenu.set_position(DisplayServer.mouse_get_position()+Vector2i(DisplayServer.window_get_size().x/2,0))
+				$PopupMenu.show()
+			elif event.pressed:
+				dragging = true
+				moving = false
+			else:
+				dragging = false
+				if not chat_window and not menu_window:
+					$Timer.start()
 	
 		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 			chat()
 
 func chat():
-	
+
 	if not chat_window:
 		chat_window = true
 		moving = false
@@ -61,7 +68,7 @@ func chat():
 		
 	else:
 		for child in get_children():
-			if child is Window:
+			if child is Window and child != $PopupMenu:
 				child.queue_free()
 				break
 		chat_window = false
@@ -96,3 +103,17 @@ func move_window():
 
 func _on_timer_timeout():
 	moving = true
+
+func _on_menu_option_selected(id):
+	match id:
+		1:
+			print("Opción 1 seleccionada")
+		2:
+			get_tree().quit()
+
+func _on_popup_menu_visibility_changed():
+	menu_window = !menu_window
+	if not chat_window and not menu_window and $Timer.is_stopped() and dragging == false:
+		$Timer.start()
+	else:
+		$Timer.stop()

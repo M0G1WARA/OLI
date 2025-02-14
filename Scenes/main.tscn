@@ -12,4 +12,7 @@ custom_minimum_size = Vector2(120, 120)
 one_shot = true
 autostart = true
 
+[node name="PopupMenu" type="PopupMenu" parent="."]
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="visibility_changed" from="PopupMenu" to="." method="_on_popup_menu_visibility_changed"]
