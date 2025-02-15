@@ -3,7 +3,7 @@ extends Node2D
 var dragging:bool = false
 var chat_window:bool = false
 var moving:bool = false
-var direction:String = "left"
+var direction:String = "right"
 var menu_window:bool = false
 
 # Called when the node enters the scene tree for the first time.
@@ -28,6 +28,7 @@ func _input(event):
 			if event.double_click:
 				$PopupMenu.set_position(DisplayServer.mouse_get_position()+Vector2i(DisplayServer.window_get_size().x/2,0))
 				$PopupMenu.show()
+				$Llama.play("eat_"+direction)
 			elif event.pressed:
 				dragging = true
 				moving = false
@@ -41,6 +42,7 @@ func _input(event):
 
 func chat():
 
+	$Llama.play("eat_"+direction)
 	if not chat_window:
 		chat_window = true
 		moving = false
@@ -82,21 +84,25 @@ func move_window():
 
 	match direction:
 
-		"left":
+		"right":
+			$Llama.play("walk_"+direction)
 			if dragging == false and window_position.x < monitor_resolution.x-DisplayServer.window_get_size().x:
 				get_tree().root.position += Vector2i(1,0)
 
 			if window_position.x+DisplayServer.window_get_size().x >= monitor_resolution.x:
-				direction = "right"
+				$Llama.play("eat_"+direction)
+				direction = "left"
 				moving = false
 				$Timer.start()
 
-		"right":
+		"left":
+			$Llama.play("walk_"+direction)
 			if dragging == false and window_position.x > 0:
 				get_tree().root.position -= Vector2i(1,0)
 
 			if window_position.x == 0:
-				direction = "left"
+				$Llama.play("eat_"+direction)
+				direction = "right"
 				moving = false
 				$Timer.start()
 

@@ -1,11 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://c4fgma0mcbnsd"]
+[gd_scene load_steps=3 format=3 uid="uid://c4fgma0mcbnsd"]
 
 [ext_resource type="Script" path="res://Scenes/main.gd" id="1_3b20u"]
+[ext_resource type="PackedScene" uid="uid://bkkq84q08dhxv" path="res://Assets/Llama/Llama.tscn" id="2_8ctvg"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_3b20u")
 
 [node name="ColorRect" type="ColorRect" parent="."]
+visible = false
 custom_minimum_size = Vector2(120, 120)
 
 [node name="Timer" type="Timer" parent="."]
@@ -13,6 +15,8 @@ one_shot = true
 autostart = true
 
 [node name="PopupMenu" type="PopupMenu" parent="."]
+
+[node name="Llama" parent="." instance=ExtResource("2_8ctvg")]
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="visibility_changed" from="PopupMenu" to="." method="_on_popup_menu_visibility_changed"]
