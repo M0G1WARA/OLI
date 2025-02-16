@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://c4fgma0mcbnsd"]
+[gd_scene load_steps=4 format=3 uid="uid://c4fgma0mcbnsd"]
 
 [ext_resource type="Script" path="res://Scenes/main.gd" id="1_3b20u"]
 [ext_resource type="PackedScene" uid="uid://bkkq84q08dhxv" path="res://Assets/Llama/Llama.tscn" id="2_8ctvg"]
+[ext_resource type="PackedScene" uid="uid://c47gp3qy815ba" path="res://Scenes/settings.tscn" id="3_785w6"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_3b20u")
@@ -18,5 +19,16 @@ autostart = true
 
 [node name="Llama" parent="." instance=ExtResource("2_8ctvg")]
 
+[node name="SettingsWindow" type="Window" parent="."]
+initial_position = 4
+size = Vector2i(640, 360)
+visible = false
+always_on_top = true
+
+[node name="Settings" parent="SettingsWindow" instance=ExtResource("3_785w6")]
+offset_right = 0.0
+offset_bottom = 0.0
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="visibility_changed" from="PopupMenu" to="." method="_on_popup_menu_visibility_changed"]
+[connection signal="close_requested" from="SettingsWindow" to="." method="_on_settings_window_close_requested"]

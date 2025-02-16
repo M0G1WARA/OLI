@@ -1,0 +1,100 @@
+[gd_scene load_steps=2 format=3 uid="uid://c47gp3qy815ba"]
+
+[ext_resource type="Script" path="res://Scenes/settings.gd" id="1_lrwpk"]
+
+[node name="Settings" type="Control"]
+custom_minimum_size = Vector2(640, 360)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 520.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+script = ExtResource("1_lrwpk")
+
+[node name="TabContainer" type="TabContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+current_tab = 0
+
+[node name="Ollama" type="TabBar" parent="TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Ollama"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Ollama/MarginContainer"]
+layout_mode = 2
+
+[node name="ModelLabel" type="Label" parent="TabContainer/Ollama/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Modelo"
+
+[node name="ItemList" type="ItemList" parent="TabContainer/Ollama/MarginContainer/VBoxContainer"]
+layout_mode = 2
+auto_height = true
+
+[node name="ServerLabel" type="Label" parent="TabContainer/Ollama/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Servidor"
+
+[node name="ServerEdit" type="LineEdit" parent="TabContainer/Ollama/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "http://127.0.0.1:11434/"
+placeholder_text = "http://127.0.0.1:11434/"
+
+[node name="HTTPRequest" type="HTTPRequest" parent="TabContainer/Ollama"]
+
+[node name="Interfaz" type="TabBar" parent="TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Interfaz"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Interfaz/MarginContainer"]
+layout_mode = 2
+
+[node name="CheckButton" type="CheckButton" parent="TabContainer/Interfaz/MarginContainer/VBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Movimiento Horizontal"
+
+[node name="TimerLabel" type="Label" parent="TabContainer/Interfaz/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Temporizador(Segundos)"
+
+[node name="SpinBox" type="SpinBox" parent="TabContainer/Interfaz/MarginContainer/VBoxContainer"]
+layout_mode = 2
+min_value = 1.0
+value = 1.0
+allow_greater = true
+
+[connection signal="request_completed" from="TabContainer/Ollama/HTTPRequest" to="." method="_on_http_request_request_completed"]

@@ -70,7 +70,7 @@ func chat():
 		
 	else:
 		for child in get_children():
-			if child is Window and child != $PopupMenu:
+			if child is Window and child != $PopupMenu and child != $SettingsWindow:
 				child.queue_free()
 				break
 		chat_window = false
@@ -113,7 +113,7 @@ func _on_timer_timeout():
 func _on_menu_option_selected(id):
 	match id:
 		1:
-			print("Opción 1 seleccionada")
+			settings()
 		2:
 			get_tree().quit()
 
@@ -123,3 +123,10 @@ func _on_popup_menu_visibility_changed():
 		$Timer.start()
 	else:
 		$Timer.stop()
+
+func settings():
+	$SettingsWindow.show()
+
+
+func _on_settings_window_close_requested():
+	$SettingsWindow.hide()
