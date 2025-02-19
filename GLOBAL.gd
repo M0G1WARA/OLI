@@ -8,11 +8,50 @@ var settings = {
 		"server":"http://127.0.0.1:11434/"
 	},
 	"interface": {
-		"language": "English",
+		"language": "en",
 		"horizontal movement": true,
 		"timer": 5,
 	}
 }
+
+func _ready():
+
+	var english_translation = Translation.new()
+	english_translation.set_locale("en")
+	
+	english_translation.add_message("MESSAGE", "Message")
+	english_translation.add_message("SEND", "Send")
+	english_translation.add_message("SETTINGS", "Settings")
+	english_translation.add_message("EXIT", "Exit")
+	
+	english_translation.add_message("MODEL", "Model")
+	english_translation.add_message("SERVER", "Server")
+	english_translation.add_message("Interface", "Interface")
+	english_translation.add_message("LANGUAGE", "Language")
+	english_translation.add_message("HORIZONTAL", "Horizontal Movement")
+	english_translation.add_message("TIMER", "Timer (time in seconds)")
+	english_translation.add_message("SAVE", "Save")
+	
+	TranslationServer.add_translation(english_translation)
+
+	var spanish_translation = Translation.new()
+	spanish_translation.set_locale("es")
+	
+	spanish_translation.add_message("MESSAGE", "Mensaje")
+	spanish_translation.add_message("SEND", "Enviar")
+	spanish_translation.add_message("SETTINGS", "Opciones")
+	spanish_translation.add_message("EXIT", "Salir")
+	
+	spanish_translation.add_message("MODEL", "Modelo")
+	spanish_translation.add_message("SERVER", "Servidor")
+	spanish_translation.add_message("Interface", "Interfaz")
+	spanish_translation.add_message("LANGUAGE", "Idioma")
+	spanish_translation.add_message("HORIZONTAL", "Movimiento Horizontal")
+	spanish_translation.add_message("TIMER", "Temporizador(Segundos)")
+	spanish_translation.add_message("SAVE", "Guardar")
+	
+	TranslationServer.add_translation(spanish_translation)
+
 
 func save_config():
 	for category in settings.keys():
@@ -27,5 +66,7 @@ func load_config():
 			if config.has_section(category):
 				for key in settings[category].keys():
 					settings[category][key] = config.get_value(category, key, settings[category][key])
+		TranslationServer.set_locale(settings["interface"]["language"])
+		
 	else:
 		save_config()

@@ -22,12 +22,12 @@ grow_vertical = 2
 [node name="Mensaje" type="TextEdit" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-placeholder_text = "Mensaje"
+placeholder_text = "MESSAGE"
 wrap_mode = 1
 
 [node name="Enviar" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Enviar"
+text = "SEND"
 
 [node name="Pensamiento" type="Label" parent="VBoxContainer"]
 visible = false

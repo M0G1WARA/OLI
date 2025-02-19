@@ -9,8 +9,8 @@ var menu_window:bool = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Global.load_config()
-	$PopupMenu.add_item("Opciones", 1)
-	$PopupMenu.add_item("Salir", 2)
+	$PopupMenu.add_item("SETTINGS", 1)
+	$PopupMenu.add_item("EXIT", 2)
 	$PopupMenu.connect("id_pressed",_on_menu_option_selected)
 
 
