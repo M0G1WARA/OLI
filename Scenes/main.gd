@@ -1,22 +1,18 @@
 extends Node2D
 
 var dragging:bool = false
-var chat_window:bool = false
 var moving:bool = false
 var direction:String = "right"
-var menu_window:bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Global.load_config()
-	$PopupMenu.add_item("SETTINGS", 1)
-	$PopupMenu.add_item("EXIT", 2)
-	$PopupMenu.connect("id_pressed",_on_menu_option_selected)
+	$Timer.wait_time = Global.settings["interface"]["timer"]
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	if moving:
+	if moving and Global.settings["interface"]["horizontal movement"]:
 		move_window()
 
 
@@ -35,7 +31,7 @@ func _input(event):
 				moving = false
 			else:
 				dragging = false
-				if not chat_window and not menu_window:
+				if not $ChatWindow.visible and not $PopupMenu.visible:
 					$Timer.start()
 	
 		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
@@ -44,8 +40,7 @@ func _input(event):
 func chat():
 
 	$Llama.play("eat_"+direction)
-	if not chat_window:
-		chat_window = true
+	if not $ChatWindow.visible:
 		moving = false
 		$Timer.stop()
 	
@@ -53,28 +48,15 @@ func chat():
 		var monitor_resolution = DisplayServer.screen_get_size(monitor_id)
 		var window_position = DisplayServer.window_get_position()
 		
-		var chat_scene = load("res://Scenes/chat.tscn")
-		var instance = chat_scene.instantiate()
-		var new_window = Window.new()
-		new_window.borderless = true
-		new_window.transparent = true
-		new_window.always_on_top = true
-		new_window.title = "Chat"
-		new_window.size = Vector2(DisplayServer.window_get_size()*2) 
+		$ChatWindow.show()
+		$ChatWindow.size = Vector2(DisplayServer.window_get_size()*2) 
 		if window_position.x >= monitor_resolution.x/2:
-			new_window.position = Vector2(window_position.x - DisplayServer.window_get_size().x*2 , window_position.y)
+			$ChatWindow.position = Vector2(window_position.x - DisplayServer.window_get_size().x*2 , window_position.y)
 		else:
-			new_window.position = Vector2(window_position.x + DisplayServer.window_get_size().x , window_position.y)
-		new_window.add_child(instance) 
-		new_window.show()
-		add_child(new_window)
+			$ChatWindow.position = Vector2(window_position.x + DisplayServer.window_get_size().x , window_position.y)
 		
 	else:
-		for child in get_children():
-			if child is Window and child != $PopupMenu and child != $SettingsWindow:
-				child.queue_free()
-				break
-		chat_window = false
+		$ChatWindow.hide()
 		$Timer.start()
 
 
@@ -110,8 +92,10 @@ func move_window():
 
 func _on_timer_timeout():
 	moving = true
+	if not Global.settings["interface"]["horizontal movement"]:
+		$Llama.play("eat_"+direction)
 
-func _on_menu_option_selected(id):
+func _on_popup_menu_id_pressed(id):
 	match id:
 		1:
 			settings()
@@ -119,8 +103,7 @@ func _on_menu_option_selected(id):
 			get_tree().quit()
 
 func _on_popup_menu_visibility_changed():
-	menu_window = !menu_window
-	if not chat_window and not menu_window and $Timer.is_stopped() and dragging == false:
+	if not $ChatWindow.visible and not $PopupMenu.visible and $Timer.is_stopped() and dragging == false:
 		$Timer.start()
 	else:
 		$Timer.stop()
