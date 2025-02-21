@@ -2,7 +2,8 @@ extends Node2D
 
 var dragging:bool = false
 var moving:bool = false
-var direction:String = "right"
+var directions: Array = [ "right", "down", "left", "up"]
+var current_direction:int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -25,7 +26,7 @@ func _input(event):
 			if event.double_click:
 				$PopupMenu.set_position(DisplayServer.mouse_get_position()+Vector2i(DisplayServer.window_get_size().x/2,0))
 				$PopupMenu.show()
-				$Llama.play("eat_"+direction)
+				$Llama.play("eat_"+directions[current_direction])
 			elif event.pressed:
 				dragging = true
 				moving = false
@@ -39,7 +40,7 @@ func _input(event):
 
 func chat():
 
-	$Llama.play("eat_"+direction)
+	$Llama.play("eat_"+directions[current_direction])
 	if not $ChatWindow.visible:
 		moving = false
 		$Timer.stop()
@@ -65,35 +66,50 @@ func move_window():
 	var monitor_resolution = DisplayServer.screen_get_size(monitor_id)
 	var window_position = DisplayServer.window_get_position()
 
-	match direction:
+	match directions[current_direction]:
 
 		"right":
-			$Llama.play("walk_"+direction)
+			$Llama.play("walk_"+directions[current_direction])
 			if dragging == false and window_position.x < monitor_resolution.x-DisplayServer.window_get_size().x:
 				get_tree().root.position += Vector2i(1,0)
 
 			if window_position.x+DisplayServer.window_get_size().x >= monitor_resolution.x:
-				$Llama.play("eat_"+direction)
-				direction = "left"
-				moving = false
-				$Timer.start()
+				idle()
+		
+		"down":
+			$Llama.play("walk_"+directions[current_direction])
+			if dragging == false and window_position.y < monitor_resolution.y-DisplayServer.window_get_size().y:
+				get_tree().root.position += Vector2i(0,1)
+				
+			if window_position.y+DisplayServer.window_get_size().y >= monitor_resolution.y:
+				idle()
 
 		"left":
-			$Llama.play("walk_"+direction)
+			$Llama.play("walk_"+directions[current_direction])
 			if dragging == false and window_position.x > 0:
 				get_tree().root.position -= Vector2i(1,0)
 
 			if window_position.x == 0:
-				$Llama.play("eat_"+direction)
-				direction = "right"
-				moving = false
-				$Timer.start()
+				idle()
+		
+		"up":
+			$Llama.play("walk_"+directions[current_direction])
+			if dragging == false and window_position.y > 0:
+				get_tree().root.position -= Vector2i(0,1)
+				
+			if window_position.y == 0:
+				idle()
 
+func idle():
+	$Llama.play("eat_"+directions[current_direction])
+	moving = false
+	current_direction = (current_direction + 1) % directions.size()
+	$Timer.start()
 
 func _on_timer_timeout():
 	moving = true
 	if not Global.settings["interface"]["horizontal movement"]:
-		$Llama.play("eat_"+direction)
+		$Llama.play("eat_"+directions[current_direction])
 
 func _on_popup_menu_id_pressed(id):
 	match id:
