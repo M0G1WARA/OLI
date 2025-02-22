@@ -2,18 +2,22 @@ extends Node2D
 
 var dragging:bool = false
 var moving:bool = false
-var directions: Array = [ "right", "down", "left", "up"]
+var directions: Array = [ "right"]
 var current_direction:int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Global.load_config()
 	$Timer.wait_time = Global.settings["interface"]["timer"]
+	if Global.settings["interface"]["horizontal movement"]:
+		directions.append("left")
+	if Global.settings["interface"]["vertical movement"]:
+		directions = [ "down", "up"] if directions.size() == 1 else [ "right", "down","left", "up"]
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	if moving and Global.settings["interface"]["horizontal movement"]:
+	if moving and (Global.settings["interface"]["horizontal movement"] or Global.settings["interface"]["vertical movement"]):
 		move_window()
 
 
@@ -108,7 +112,7 @@ func idle():
 
 func _on_timer_timeout():
 	moving = true
-	if not Global.settings["interface"]["horizontal movement"]:
+	if not Global.settings["interface"]["horizontal movement"] and not Global.settings["interface"]["vertical movement"]:
 		$Llama.play("eat_"+directions[current_direction])
 
 func _on_popup_menu_id_pressed(id):
@@ -126,7 +130,6 @@ func _on_popup_menu_visibility_changed():
 
 func settings():
 	$SettingsWindow.show()
-
 
 func _on_settings_window_close_requested():
 	$SettingsWindow.hide()

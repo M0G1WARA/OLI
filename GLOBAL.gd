@@ -10,6 +10,7 @@ var settings = {
 	"interface": {
 		"language": "en",
 		"horizontal movement": true,
+		"vertical movement": false,
 		"timer": 5,
 	}
 }
@@ -29,6 +30,7 @@ func _ready():
 	english_translation.add_message("Interface", "Interface")
 	english_translation.add_message("LANGUAGE", "Language")
 	english_translation.add_message("HORIZONTAL", "Horizontal Movement")
+	english_translation.add_message("VERTICAL", "Vertical Movement")
 	english_translation.add_message("TIMER", "Timer (time in seconds)")
 	english_translation.add_message("SAVE", "Save")
 	
@@ -47,6 +49,7 @@ func _ready():
 	spanish_translation.add_message("Interface", "Interfaz")
 	spanish_translation.add_message("LANGUAGE", "Idioma")
 	spanish_translation.add_message("HORIZONTAL", "Movimiento Horizontal")
+	spanish_translation.add_message("VERTICAL", "Movimiento Vertical")
 	spanish_translation.add_message("TIMER", "Temporizador(Segundos)")
 	spanish_translation.add_message("SAVE", "Guardar")
 	

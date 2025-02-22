@@ -35,7 +35,8 @@ func load_config():
 		if $TabContainer/Interface/MarginContainer/VBoxContainer/ItemList.get_item_text(i) == Global.settings["interface"]["language"]:
 			$TabContainer/Interface/MarginContainer/VBoxContainer/ItemList.select(i)
 			break
-	$TabContainer/Interface/MarginContainer/VBoxContainer/CheckButton.button_pressed = Global.settings["interface"]["horizontal movement"]
+	$TabContainer/Interface/MarginContainer/VBoxContainer/CheckButtonHorizontal.button_pressed = Global.settings["interface"]["horizontal movement"]
+	$TabContainer/Interface/MarginContainer/VBoxContainer/CheckButtonVertical.button_pressed = Global.settings["interface"]["vertical movement"]
 	$TabContainer/Interface/MarginContainer/VBoxContainer/SpinBox.value = Global.settings["interface"]["timer"]
 	
 
@@ -48,6 +49,7 @@ func _on_save_button_pressed():
 
 func _on_save_interface_button_pressed():
 	Global.settings["interface"]["language"] = "en" if $TabContainer/Interface/MarginContainer/VBoxContainer/ItemList.get_selected_items()[0] == 0 else "es"
-	Global.settings["interface"]["horizontal movement"] = $TabContainer/Interface/MarginContainer/VBoxContainer/CheckButton.button_pressed
+	Global.settings["interface"]["horizontal movement"] = $TabContainer/Interface/MarginContainer/VBoxContainer/CheckButtonHorizontal.button_pressed
+	Global.settings["interface"]["vertical movement"] = $TabContainer/Interface/MarginContainer/VBoxContainer/CheckButtonVertical.button_pressed
 	Global.settings["interface"]["timer"] = $TabContainer/Interface/MarginContainer/VBoxContainer/SpinBox.value
 	Global.save_config()

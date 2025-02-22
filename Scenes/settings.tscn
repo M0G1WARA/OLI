@@ -97,7 +97,11 @@ item_count = 2
 item_0/text = "English"
 item_1/text = "Español"
 
-[node name="CheckButton" type="CheckButton" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
+[node name="CheckButtonVertical" type="CheckButton" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "VERTICAL"
+
+[node name="CheckButtonHorizontal" type="CheckButton" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
 layout_mode = 2
 button_pressed = true
 text = "HORIZONTAL"
