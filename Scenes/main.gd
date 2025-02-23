@@ -54,11 +54,11 @@ func chat():
 		var window_position = DisplayServer.window_get_position()
 		
 		$ChatWindow.show()
-		$ChatWindow.size = Vector2(DisplayServer.window_get_size()*2) 
+		$ChatWindow.size = Vector2(DisplayServer.window_get_size()*Global.settings["interface"]["chat scale"]) 
 		if window_position.x >= monitor_resolution.x/2:
-			$ChatWindow.position = Vector2(window_position.x - DisplayServer.window_get_size().x*2 , window_position.y)
+			$ChatWindow.position = Vector2(window_position.x - DisplayServer.window_get_size().x*Global.settings["interface"]["chat scale"] , window_position.y)
 		else:
-			$ChatWindow.position = Vector2(window_position.x + DisplayServer.window_get_size().x , window_position.y)
+			$ChatWindow.position = Vector2(window_position.x + DisplayServer.window_get_size().x, window_position.y)
 		
 	else:
 		$ChatWindow.hide()

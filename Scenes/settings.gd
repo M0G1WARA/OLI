@@ -39,6 +39,14 @@ func load_config():
 	$TabContainer/Interface/MarginContainer/VBoxContainer/CheckButtonVertical.button_pressed = Global.settings["interface"]["vertical movement"]
 	$TabContainer/Interface/MarginContainer/VBoxContainer/SpinBox.value = Global.settings["interface"]["timer"]
 	
+	var resolution = Global.settings["interface"]["resolution"].x
+	$TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer/Resolution.text = str(resolution) +" x "+ str(resolution)
+	$TabContainer/Interface/MarginContainer/VBoxContainer/ResolutionHSlider.value = resolution
+	
+	var scale = Global.settings["interface"]["chat scale"]
+	$TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer2/Scale.text = str(scale)+" ("+str(scale*resolution)+" x "+str(scale*resolution)+")" 
+	$TabContainer/Interface/MarginContainer/VBoxContainer/ScaleHSlider.value = Global.settings["interface"]["chat scale"]
+	
 
 
 func _on_save_button_pressed():
@@ -52,4 +60,20 @@ func _on_save_interface_button_pressed():
 	Global.settings["interface"]["horizontal movement"] = $TabContainer/Interface/MarginContainer/VBoxContainer/CheckButtonHorizontal.button_pressed
 	Global.settings["interface"]["vertical movement"] = $TabContainer/Interface/MarginContainer/VBoxContainer/CheckButtonVertical.button_pressed
 	Global.settings["interface"]["timer"] = $TabContainer/Interface/MarginContainer/VBoxContainer/SpinBox.value
+	var tmpResolution = $TabContainer/Interface/MarginContainer/VBoxContainer/ResolutionHSlider.value
+	Global.settings["interface"]["resolution"] = Vector2i(tmpResolution,tmpResolution)
+	Global.settings["interface"]["chat scale"] = $TabContainer/Interface/MarginContainer/VBoxContainer/ScaleHSlider.value
 	Global.save_config()
+
+
+func _on_resolution_h_slider_value_changed(value):
+	var tmpScale = $TabContainer/Interface/MarginContainer/VBoxContainer/ScaleHSlider.value
+	$TabContainer/Interface/MarginContainer/VBoxContainer/ScaleHSlider.emit_signal("value_changed",tmpScale)
+	var tmpResolution = str($TabContainer/Interface/MarginContainer/VBoxContainer/ResolutionHSlider.value)
+	$TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer/Resolution.text = tmpResolution +" x "+ tmpResolution
+
+
+func _on_scale_h_slider_value_changed(value):
+	var tmpResolution = $TabContainer/Interface/MarginContainer/VBoxContainer/ResolutionHSlider.value
+	var tmpScale = $TabContainer/Interface/MarginContainer/VBoxContainer/ScaleHSlider.value
+	$TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer2/Scale.text = str(tmpScale)+" ("+str(tmpScale*tmpResolution)+" x "+str(tmpScale*tmpResolution)+")" 

@@ -12,6 +12,8 @@ var settings = {
 		"horizontal movement": true,
 		"vertical movement": false,
 		"timer": 5,
+		"resolution": Vector2i(120, 120),
+		"chat scale": 2
 	}
 }
 
@@ -32,6 +34,8 @@ func _ready():
 	english_translation.add_message("HORIZONTAL", "Horizontal Movement")
 	english_translation.add_message("VERTICAL", "Vertical Movement")
 	english_translation.add_message("TIMER", "Timer (time in seconds)")
+	english_translation.add_message("RESOLUTION", "Resolution")
+	english_translation.add_message("SCALE", "Chat scale")
 	english_translation.add_message("SAVE", "Save")
 	
 	TranslationServer.add_translation(english_translation)
@@ -51,6 +55,8 @@ func _ready():
 	spanish_translation.add_message("HORIZONTAL", "Movimiento Horizontal")
 	spanish_translation.add_message("VERTICAL", "Movimiento Vertical")
 	spanish_translation.add_message("TIMER", "Temporizador(Segundos)")
+	spanish_translation.add_message("RESOLUTION", "Resolución")
+	spanish_translation.add_message("SCALE", "Escala del chat")
 	spanish_translation.add_message("SAVE", "Guardar")
 	
 	TranslationServer.add_translation(spanish_translation)
@@ -61,6 +67,8 @@ func save_config():
 		for key in settings[category].keys():
 			config.set_value(category, key, settings[category][key])
 	config.save(config_file_path)
+	TranslationServer.set_locale(settings["interface"]["language"])
+	DisplayServer.window_set_size(settings["interface"]["resolution"])
 
 
 func load_config():
@@ -70,6 +78,7 @@ func load_config():
 				for key in settings[category].keys():
 					settings[category][key] = config.get_value(category, key, settings[category][key])
 		TranslationServer.set_locale(settings["interface"]["language"])
+		DisplayServer.window_set_size(settings["interface"]["resolution"])
 		
 	else:
 		save_config()

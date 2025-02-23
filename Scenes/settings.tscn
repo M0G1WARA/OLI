@@ -116,10 +116,45 @@ min_value = 1.0
 value = 1.0
 allow_greater = true
 
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ResolutionLabel" type="Label" parent="TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "RESOLUTION"
+
+[node name="Resolution" type="Label" parent="TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="ResolutionHSlider" type="HSlider" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
+layout_mode = 2
+min_value = 40.0
+max_value = 800.0
+step = 10.0
+value = 120.0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ScaleLabel" type="Label" parent="TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "SCALE"
+
+[node name="Scale" type="Label" parent="TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="ScaleHSlider" type="HSlider" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
+layout_mode = 2
+min_value = 1.0
+max_value = 10.0
+value = 1.0
+
 [node name="SaveInterfaceButton" type="Button" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "SAVE"
 
 [connection signal="pressed" from="TabContainer/Ollama/MarginContainer/VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="request_completed" from="TabContainer/Ollama/HTTPRequest" to="." method="_on_http_request_request_completed"]
+[connection signal="value_changed" from="TabContainer/Interface/MarginContainer/VBoxContainer/ResolutionHSlider" to="." method="_on_resolution_h_slider_value_changed"]
+[connection signal="value_changed" from="TabContainer/Interface/MarginContainer/VBoxContainer/ScaleHSlider" to="." method="_on_scale_h_slider_value_changed"]
 [connection signal="pressed" from="TabContainer/Interface/MarginContainer/VBoxContainer/SaveInterfaceButton" to="." method="_on_save_interface_button_pressed"]
