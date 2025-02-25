@@ -3,7 +3,7 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$TabContainer/Ollama/HTTPRequest.request("http://127.0.0.1:11434/api/tags")
+	$TabContainer/Ollama/HTTPRequest.request(Global.settings["ollama"]["server"]+"api/tags")
 
 
 func _on_http_request_request_completed(_result, _response_code, _headers, body):

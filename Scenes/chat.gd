@@ -1,28 +1,16 @@
 extends Control
 
-var url: String = "http://127.0.0.1:11434/api/generate"
+var url: String = "api/generate"
 var headersPOST = ["Content-Type: application/json"]
-var data_to_send: String
 var data = {
-		"model": "deepseek-r1:8b",
-		"prompt": "Hola"
+		"model": "",
+		"prompt": ""
 	}
-var pensamiento:bool
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	pass
-
-func _on_enviar_pressed():
-	var json = JSON.stringify(data)
-	$HTTPRequest.request(url, headersPOST, HTTPClient.METHOD_POST, json)
+var think:bool = false
 
 
 func _on_http_request_request_completed(_result, response_code, _headers, body):
+
 	if response_code == 200:
 		var response_text = body.get_string_from_utf8()
 		var lines = response_text.split("\n")
@@ -37,22 +25,40 @@ func _on_http_request_request_completed(_result, response_code, _headers, body):
 					var data_received = json.data
 					
 					if data_received.response=='<think>':
-						pensamiento = true
+						think = true
 					
-					if pensamiento:
-						$VBoxContainer/Pensamiento.text += data_received.response
+					if think:
+						$VBoxContainer/Think.text += data_received.response
 					else:
-						$VBoxContainer/Respuesta.text += data_received.response
+						$VBoxContainer/Response.text += data_received.response
 						
 					if data_received.response=='</think>':
-						pensamiento = false
+						think = false
 					
 				else:
-					print("JSON Parse Error: ")
+					$AcceptDialog.dialog_text = "ERROR JSON"
+					$AcceptDialog.show()
 				
 	else:
-		print("Error en la respuesta: ", response_code)
+		$AcceptDialog.dialog_text = "ERROR RESPONSE" + response_code
+		$AcceptDialog.show()
+	
+	$VBoxContainer/SendButton.disabled = false
+	$VBoxContainer/SendButton/ProgressBar.hide()
+
+func _on_prompt_text_changed():
+	data["prompt"] = $VBoxContainer/Prompt.text
 
 
-func _on_mensaje_text_changed():
-	data["prompt"] = $VBoxContainer/Mensaje.text
+func _on_send_button_pressed():
+	if Global.settings["ollama"]["model"] != "":
+		$VBoxContainer/SendButton.disabled = true
+		$VBoxContainer/SendButton/ProgressBar.show()
+		data["model"] = Global.settings["ollama"]["model"]
+		$VBoxContainer/Response.clear()
+		var json = JSON.stringify(data)
+		$HTTPRequest.request(Global.settings["ollama"]["server"]+url, headersPOST, HTTPClient.METHOD_POST, json)
+	else:
+		$AcceptDialog.dialog_text = "ERROR MODEL"
+		$AcceptDialog.show()
+	
