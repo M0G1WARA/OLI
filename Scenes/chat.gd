@@ -51,6 +51,11 @@ func _on_prompt_text_changed():
 
 
 func _on_send_button_pressed():
+	if Global.settings["interface"]["think"]:
+		$VBoxContainer/ThinkLabel.show()
+		$VBoxContainer/Think.show()
+		$VBoxContainer/ResponseLabel.show()
+	
 	if Global.settings["ollama"]["model"] != "":
 		$VBoxContainer/SendButton.disabled = true
 		$VBoxContainer/SendButton/ProgressBar.show()

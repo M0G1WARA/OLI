@@ -43,9 +43,11 @@ func load_config():
 	$TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer/Resolution.text = str(resolution) +" x "+ str(resolution)
 	$TabContainer/Interface/MarginContainer/VBoxContainer/ResolutionHSlider.value = resolution
 	
-	var scale = Global.settings["interface"]["chat scale"]
-	$TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer2/Scale.text = str(scale)+" ("+str(scale*resolution)+" x "+str(scale*resolution)+")" 
+	var chatScale = Global.settings["interface"]["chat scale"]
+	$TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer2/Scale.text = str(chatScale)+" ("+str(chatScale*resolution)+" x "+str(chatScale*resolution)+")" 
 	$TabContainer/Interface/MarginContainer/VBoxContainer/ScaleHSlider.value = Global.settings["interface"]["chat scale"]
+	
+	$TabContainer/Interface/MarginContainer/VBoxContainer/ThinkCheckButton.button_pressed = Global.settings["interface"]["think"]
 	
 
 
@@ -63,6 +65,7 @@ func _on_save_interface_button_pressed():
 	var tmpResolution = $TabContainer/Interface/MarginContainer/VBoxContainer/ResolutionHSlider.value
 	Global.settings["interface"]["resolution"] = Vector2i(tmpResolution,tmpResolution)
 	Global.settings["interface"]["chat scale"] = $TabContainer/Interface/MarginContainer/VBoxContainer/ScaleHSlider.value
+	Global.settings["interface"]["think"] = $TabContainer/Interface/MarginContainer/VBoxContainer/ThinkCheckButton.button_pressed
 	Global.save_config()
 
 

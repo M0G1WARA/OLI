@@ -27,8 +27,7 @@ item_1/id = 2
 
 [node name="SettingsWindow" type="Window" parent="."]
 initial_position = 4
-size = Vector2i(640, 360)
-visible = false
+size = Vector2i(640, 640)
 always_on_top = true
 
 [node name="Settings" parent="SettingsWindow" instance=ExtResource("3_785w6")]

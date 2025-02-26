@@ -3,13 +3,13 @@
 [ext_resource type="Script" path="res://Scenes/settings.gd" id="1_lrwpk"]
 
 [node name="Settings" type="Control"]
-custom_minimum_size = Vector2(640, 360)
+custom_minimum_size = Vector2(640, 640)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = 520.0
-offset_bottom = 240.0
+offset_bottom = 520.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
@@ -22,9 +22,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 0
+current_tab = 1
 
 [node name="Ollama" type="TabBar" parent="TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -60,6 +61,11 @@ layout_mode = 2
 text = "http://127.0.0.1:11434/"
 placeholder_text = "http://127.0.0.1:11434/"
 
+[node name="HSeparator" type="HSeparator" parent="TabContainer/Ollama/MarginContainer/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
 [node name="SaveButton" type="Button" parent="TabContainer/Ollama/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "SAVE"
@@ -67,7 +73,6 @@ text = "SAVE"
 [node name="HTTPRequest" type="HTTPRequest" parent="TabContainer/Ollama"]
 
 [node name="Interface" type="TabBar" parent="TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
@@ -148,6 +153,15 @@ layout_mode = 2
 min_value = 1.0
 max_value = 10.0
 value = 1.0
+
+[node name="ThinkCheckButton" type="CheckButton" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "SHOWTHINK"
+
+[node name="HSeparator" type="HSeparator" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
 
 [node name="SaveInterfaceButton" type="Button" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
 layout_mode = 2

@@ -47,7 +47,12 @@ layout_mode = 2
 text = "THINK"
 
 [node name="Think" type="TextEdit" parent="VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
+size_flags_vertical = 3
+editable = false
+wrap_mode = 1
 
 [node name="ResponseLabel" type="Label" parent="VBoxContainer"]
 visible = false

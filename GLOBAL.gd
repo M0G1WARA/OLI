@@ -13,7 +13,8 @@ var settings = {
 		"vertical movement": false,
 		"timer": 5,
 		"resolution": Vector2i(120, 120),
-		"chat scale": 2
+		"chat scale": 2,
+		"think": false
 	}
 }
 
@@ -36,6 +37,9 @@ func _ready():
 	english_translation.add_message("TIMER", "Timer (time in seconds)")
 	english_translation.add_message("RESOLUTION", "Resolution")
 	english_translation.add_message("SCALE", "Chat scale")
+	english_translation.add_message("SHOWTHINK", "Show thinking")
+	english_translation.add_message("THINK", "Think: ")
+	english_translation.add_message("RESPONSE", "Response: ")
 	english_translation.add_message("SAVE", "Save")
 	
 	TranslationServer.add_translation(english_translation)
@@ -57,6 +61,9 @@ func _ready():
 	spanish_translation.add_message("TIMER", "Temporizador(Segundos)")
 	spanish_translation.add_message("RESOLUTION", "Resolución")
 	spanish_translation.add_message("SCALE", "Escala del chat")
+	spanish_translation.add_message("SHOWTHINK", "Mostrar pensamiento")
+	spanish_translation.add_message("THINK", "Pensamiento: ")
+	spanish_translation.add_message("RESPONSE", "Respuesta: ")
 	spanish_translation.add_message("SAVE", "Guardar")
 	
 	TranslationServer.add_translation(spanish_translation)
