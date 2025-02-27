@@ -52,6 +52,10 @@ custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 size_flags_vertical = 3
 editable = false
+context_menu_enabled = false
+drag_and_drop_selection_enabled = false
+virtual_keyboard_enabled = false
+middle_mouse_paste_enabled = false
 wrap_mode = 1
 
 [node name="ResponseLabel" type="Label" parent="VBoxContainer"]
@@ -63,7 +67,10 @@ text = "RESPONSE"
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 size_flags_vertical = 3
-editable = false
+context_menu_enabled = false
+drag_and_drop_selection_enabled = false
+virtual_keyboard_enabled = false
+middle_mouse_paste_enabled = false
 wrap_mode = 1
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
@@ -71,9 +78,10 @@ wrap_mode = 1
 [node name="AcceptDialog" type="AcceptDialog" parent="."]
 title = "Error"
 initial_position = 4
-size = Vector2i(127, 100)
 transient = false
+always_on_top = true
 
+[connection signal="draw" from="." to="." method="_on_draw"]
 [connection signal="text_changed" from="VBoxContainer/Prompt" to="." method="_on_prompt_text_changed"]
 [connection signal="pressed" from="VBoxContainer/SendButton" to="." method="_on_send_button_pressed"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]

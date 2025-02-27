@@ -36,11 +36,11 @@ func _on_http_request_request_completed(_result, response_code, _headers, body):
 						think = false
 					
 				else:
-					$AcceptDialog.dialog_text = "ERROR JSON"
+					$AcceptDialog.dialog_text = tr("ERROR JSON") + str(json.get_error_message())
 					$AcceptDialog.show()
 				
 	else:
-		$AcceptDialog.dialog_text = "ERROR RESPONSE" + response_code
+		$AcceptDialog.dialog_text = tr("ERROR RESPONSE") + str(response_code)
 		$AcceptDialog.show()
 	
 	$VBoxContainer/SendButton.disabled = false
@@ -51,19 +51,28 @@ func _on_prompt_text_changed():
 
 
 func _on_send_button_pressed():
+	if $VBoxContainer/Prompt.text =="":
+		$AcceptDialog.dialog_text = "EMPTY"
+		$AcceptDialog.show()
+	else:
+		if Global.settings["ollama"]["model"] != "":
+			$VBoxContainer/SendButton.disabled = true
+			$VBoxContainer/SendButton/ProgressBar.show()
+			data["model"] = Global.settings["ollama"]["model"]
+			$VBoxContainer/Response.clear()
+			var json = JSON.stringify(data)
+			$HTTPRequest.request(Global.settings["ollama"]["server"]+url, headersPOST, HTTPClient.METHOD_POST, json)
+		else:
+			$AcceptDialog.dialog_text = tr("ERROR MODEL")
+			$AcceptDialog.show()
+
+
+func _on_draw():
 	if Global.settings["interface"]["think"]:
 		$VBoxContainer/ThinkLabel.show()
 		$VBoxContainer/Think.show()
 		$VBoxContainer/ResponseLabel.show()
-	
-	if Global.settings["ollama"]["model"] != "":
-		$VBoxContainer/SendButton.disabled = true
-		$VBoxContainer/SendButton/ProgressBar.show()
-		data["model"] = Global.settings["ollama"]["model"]
-		$VBoxContainer/Response.clear()
-		var json = JSON.stringify(data)
-		$HTTPRequest.request(Global.settings["ollama"]["server"]+url, headersPOST, HTTPClient.METHOD_POST, json)
 	else:
-		$AcceptDialog.dialog_text = "ERROR MODEL"
-		$AcceptDialog.show()
-	
+		$VBoxContainer/ThinkLabel.hide()
+		$VBoxContainer/Think.hide()
+		$VBoxContainer/ResponseLabel.hide()

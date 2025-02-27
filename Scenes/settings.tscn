@@ -22,10 +22,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 1
+current_tab = 0
 
 [node name="Ollama" type="TabBar" parent="TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -71,8 +70,10 @@ layout_mode = 2
 text = "SAVE"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="TabContainer/Ollama"]
+timeout = 2.0
 
 [node name="Interface" type="TabBar" parent="TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
@@ -167,6 +168,14 @@ size_flags_vertical = 3
 layout_mode = 2
 text = "SAVE"
 
+[node name="AcceptDialog" type="AcceptDialog" parent="."]
+auto_translate_mode = 1
+title = "Error"
+initial_position = 4
+transient = false
+always_on_top = true
+
+[connection signal="draw" from="." to="." method="_on_draw"]
 [connection signal="pressed" from="TabContainer/Ollama/MarginContainer/VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="request_completed" from="TabContainer/Ollama/HTTPRequest" to="." method="_on_http_request_request_completed"]
 [connection signal="value_changed" from="TabContainer/Interface/MarginContainer/VBoxContainer/ResolutionHSlider" to="." method="_on_resolution_h_slider_value_changed"]

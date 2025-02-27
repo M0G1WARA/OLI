@@ -1,34 +1,37 @@
 extends Control
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	$TabContainer/Ollama/HTTPRequest.request(Global.settings["ollama"]["server"]+"api/tags")
+func _on_http_request_request_completed(_result, response_code, _headers, body):
+	if response_code == 200:
+		var json = JSON.new()
+		var error = json.parse(body.get_string_from_utf8())
+		if error == OK:
+			var data_received = json.data
+			var models = data_received["models"] 
+			var item_list = $TabContainer/Ollama/MarginContainer/VBoxContainer/ItemList
+			item_list.clear()
 
-
-func _on_http_request_request_completed(_result, _response_code, _headers, body):
-	var json = JSON.new()
-	var error = json.parse(body.get_string_from_utf8())
-	if error == OK:
-		var data_received = json.data
-		var models = data_received["models"] 
-		var item_list = $TabContainer/Ollama/MarginContainer/VBoxContainer/ItemList
-		item_list.clear()
-
-		for model in models:
-			item_list.add_item(model["name"])
-		
-		load_config()
+			for model in models:
+				item_list.add_item(model["name"])
+			
+			load_ollama_settings()
+			
+		else:
+			$AcceptDialog.dialog_text = tr("ERROR JSON") + str(json.get_error_message())
+			$AcceptDialog.show()
 	else:
-		print("Error al parsear JSON: ", json.error_string)
+		$AcceptDialog.dialog_text = tr("ERROR RESPONSE") + str(response_code)
+		$AcceptDialog.show()
 
-func load_config():
+func load_ollama_settings():
 	$TabContainer/Ollama/MarginContainer/VBoxContainer/ServerEdit.text = Global.settings["ollama"]["server"]
 	for i in range($TabContainer/Ollama/MarginContainer/VBoxContainer/ItemList.get_item_count()):
 		if $TabContainer/Ollama/MarginContainer/VBoxContainer/ItemList.get_item_text(i) == Global.settings["ollama"]["model"]:
 			$TabContainer/Ollama/MarginContainer/VBoxContainer/ItemList.select(i)
 			break
-	
+
+
+func load_interface_settings():
 	$TabContainer/Interface/MarginContainer/VBoxContainer/ItemList.select( 0 if Global.settings["interface"]["language"] == "en" else 1)
 	
 	for i in range($TabContainer/Interface/MarginContainer/VBoxContainer/ItemList.get_item_count()):
@@ -54,6 +57,7 @@ func load_config():
 func _on_save_button_pressed():
 	Global.settings["ollama"]["model"] = $TabContainer/Ollama/MarginContainer/VBoxContainer/ItemList.get_item_text($TabContainer/Ollama/MarginContainer/VBoxContainer/ItemList.get_selected_items()[0])if $TabContainer/Ollama/MarginContainer/VBoxContainer/ItemList.get_selected_items().size() > 0 else ""
 	Global.settings["ollama"]["server"] = $TabContainer/Ollama/MarginContainer/VBoxContainer/ServerEdit.text
+	$TabContainer/Ollama/HTTPRequest.request(Global.settings["ollama"]["server"]+"api/tags")
 	Global.save_config()
 
 
@@ -80,3 +84,8 @@ func _on_scale_h_slider_value_changed(value):
 	var tmpResolution = $TabContainer/Interface/MarginContainer/VBoxContainer/ResolutionHSlider.value
 	var tmpScale = $TabContainer/Interface/MarginContainer/VBoxContainer/ScaleHSlider.value
 	$TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer2/Scale.text = str(tmpScale)+" ("+str(tmpScale*tmpResolution)+" x "+str(tmpScale*tmpResolution)+")" 
+
+
+func _on_draw():
+	$TabContainer/Ollama/HTTPRequest.request(Global.settings["ollama"]["server"]+"api/tags")
+	load_interface_settings()

@@ -34,7 +34,7 @@ func _ready():
 	english_translation.add_message("LANGUAGE", "Language")
 	english_translation.add_message("HORIZONTAL", "Horizontal Movement")
 	english_translation.add_message("VERTICAL", "Vertical Movement")
-	english_translation.add_message("TIMER", "Timer (time in seconds)")
+	english_translation.add_message("TIMER", "Idle time (Seconds)")
 	english_translation.add_message("RESOLUTION", "Resolution")
 	english_translation.add_message("SCALE", "Chat scale")
 	english_translation.add_message("SHOWTHINK", "Show thinking")
@@ -42,7 +42,13 @@ func _ready():
 	english_translation.add_message("RESPONSE", "Response: ")
 	english_translation.add_message("SAVE", "Save")
 	
+	english_translation.add_message("ERROR JSON", "JSON parse error: ")
+	english_translation.add_message("ERROR RESPONSE", "Connection to Ollama failed. \nMake sure it is installed and/or configure the server in the settings menu. \nError code: ")
+	english_translation.add_message("EMPTY", "Prompt is empty")
+	english_translation.add_message("ERROR MODEL", "No model is selected \nSelect one from the settings menu.")
+	
 	TranslationServer.add_translation(english_translation)
+
 
 	var spanish_translation = Translation.new()
 	spanish_translation.set_locale("es")
@@ -58,13 +64,18 @@ func _ready():
 	spanish_translation.add_message("LANGUAGE", "Idioma")
 	spanish_translation.add_message("HORIZONTAL", "Movimiento Horizontal")
 	spanish_translation.add_message("VERTICAL", "Movimiento Vertical")
-	spanish_translation.add_message("TIMER", "Temporizador(Segundos)")
+	spanish_translation.add_message("TIMER", "Tiempo inactivo (Segundos)")
 	spanish_translation.add_message("RESOLUTION", "Resolución")
 	spanish_translation.add_message("SCALE", "Escala del chat")
 	spanish_translation.add_message("SHOWTHINK", "Mostrar pensamiento")
 	spanish_translation.add_message("THINK", "Pensamiento: ")
 	spanish_translation.add_message("RESPONSE", "Respuesta: ")
 	spanish_translation.add_message("SAVE", "Guardar")
+	
+	spanish_translation.add_message("ERROR JSON", "Error al analizar JSON: ")
+	spanish_translation.add_message("ERROR RESPONSE", "No se ha podido conectar con Ollama. \nAsegúrese de que está instalado y/o configure el servidor en el menú de opciones. \nCódigo de error: ")
+	spanish_translation.add_message("EMPTY", "El promp está vacío")
+	spanish_translation.add_message("ERROR MODEL", "No hay ningún modelo seleccionado \nSeleccione uno en el menú de opciones")
 	
 	TranslationServer.add_translation(spanish_translation)
 
