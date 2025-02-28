@@ -1,6 +1,6 @@
 extends Node
 
-var config_file_path = "user://config.cfg"
+var config_file_path = "user://OLI-config.cfg"
 var config = ConfigFile.new()
 var settings = {  
 	"ollama": {
