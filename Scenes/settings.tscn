@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c47gp3qy815ba"]
 
-[ext_resource type="Script" path="res://Scenes/settings.gd" id="1_lrwpk"]
+[ext_resource type="Script" uid="uid://cxteq20h57h1m" path="res://Scenes/settings.gd" id="1_lrwpk"]
 
 [node name="Settings" type="Control"]
 custom_minimum_size = Vector2(640, 640)
