@@ -51,6 +51,7 @@ func load_interface_settings():
 	$TabContainer/Interface/MarginContainer/VBoxContainer/ScaleHSlider.value = Global.settings["interface"]["chat scale"]
 	
 	$TabContainer/Interface/MarginContainer/VBoxContainer/ThinkCheckButton.button_pressed = Global.settings["interface"]["think"]
+	$TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer3/ResponseCheckButton.button_pressed = Global.settings["interface"]["chunked"]
 	
 
 func load_prompt_settings():
@@ -72,6 +73,7 @@ func _on_save_interface_button_pressed():
 	Global.settings["interface"]["resolution"] = Vector2i(tmpResolution,tmpResolution)
 	Global.settings["interface"]["chat scale"] = $TabContainer/Interface/MarginContainer/VBoxContainer/ScaleHSlider.value
 	Global.settings["interface"]["think"] = $TabContainer/Interface/MarginContainer/VBoxContainer/ThinkCheckButton.button_pressed
+	Global.settings["interface"]["chunked"] = $TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer3/ResponseCheckButton.button_pressed
 	Global.save_config()
 
 

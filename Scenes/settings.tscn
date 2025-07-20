@@ -159,6 +159,21 @@ value = 1.0
 layout_mode = 2
 text = "SHOWTHINK"
 
+[node name="HBoxContainer3" type="HBoxContainer" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "COMPLETE RESPONSE"
+
+[node name="ResponseCheckButton" type="CheckButton" parent="TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "CHUNKED RESPONSE"
+
 [node name="HSeparator" type="HSeparator" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2

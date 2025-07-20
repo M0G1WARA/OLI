@@ -14,7 +14,8 @@ var settings = {
 		"timer": 5,
 		"resolution": Vector2i(120, 120),
 		"chat scale": 2,
-		"think": false
+		"think": false,
+		"chunked": true,
 	},
 	"prompt": {
 		"instructional prompt": ""
@@ -41,6 +42,8 @@ func _ready():
 	english_translation.add_message("RESOLUTION", "Resolution")
 	english_translation.add_message("SCALE", "Chat scale")
 	english_translation.add_message("SHOWTHINK", "Show thinking")
+	english_translation.add_message("CHUNKED RESPONSE", "Response by chunks")
+	english_translation.add_message("COMPLETE RESPONSE", "Complete response")
 	english_translation.add_message("THINK", "Think: ")
 	english_translation.add_message("RESPONSE", "Response: ")
 	english_translation.add_message("SAVE", "Save")
@@ -74,6 +77,8 @@ func _ready():
 	spanish_translation.add_message("RESOLUTION", "Resolución")
 	spanish_translation.add_message("SCALE", "Escala del chat")
 	spanish_translation.add_message("SHOWTHINK", "Mostrar pensamiento")
+	spanish_translation.add_message("CHUNKED RESPONSE", "Respuesta por partes")
+	spanish_translation.add_message("COMPLETE RESPONSE", "Respuesta completa")
 	spanish_translation.add_message("THINK", "Pensamiento: ")
 	spanish_translation.add_message("RESPONSE", "Respuesta: ")
 	spanish_translation.add_message("SAVE", "Guardar")

@@ -9,7 +9,7 @@ var data = {
 var think:bool = false
 
 
-func test_httpclient():
+func response_by_chunk():
 	var err = 0
 	var http_client = HTTPClient.new()
 	
@@ -65,7 +65,7 @@ func test_httpclient():
 						think = false
 				
 				else:
-					print("Error al parsear JSON, código de error: ", json.error)
+					$AcceptDialog.dialog_text = tr("ERROR JSON") +json.error
 		
 		http_client.close()
 		$VBoxContainer/SendButton.disabled = false
@@ -126,8 +126,10 @@ func _on_send_button_pressed():
 			data["model"] = Global.settings["ollama"]["model"]
 			$VBoxContainer/Response.clear()
 			var json = JSON.stringify(data)
-			test_httpclient()
-			#$HTTPRequest.request(Global.settings["ollama"]["server"]+url, headersPOST, HTTPClient.METHOD_POST, json)
+			if Global.settings["interface"]["chunked"]:
+				response_by_chunk()
+			else:
+				$HTTPRequest.request(Global.settings["ollama"]["server"]+url, headersPOST, HTTPClient.METHOD_POST, json)
 		else:
 			$AcceptDialog.dialog_text = tr("ERROR MODEL")
 			$AcceptDialog.show()
