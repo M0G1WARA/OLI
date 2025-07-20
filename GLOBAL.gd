@@ -15,6 +15,9 @@ var settings = {
 		"resolution": Vector2i(120, 120),
 		"chat scale": 2,
 		"think": false
+	},
+	"prompt": {
+		"instructional prompt": ""
 	}
 }
 
@@ -47,6 +50,9 @@ func _ready():
 	english_translation.add_message("EMPTY", "Prompt is empty")
 	english_translation.add_message("ERROR MODEL", "No model is selected \nSelect one from the settings menu.")
 	
+	english_translation.add_message("INSTRUCTIONAL PROMPT","Instructional Prompt")
+	english_translation.add_message("INSTRUCTIONAL PROMPT TEXT","A brief and clear instruction used to guide the AI and generate appropriate responses. For example: \nYou are a translator. Translate this sentence from Spanish to English:")
+	
 	TranslationServer.add_translation(english_translation)
 
 
@@ -76,6 +82,9 @@ func _ready():
 	spanish_translation.add_message("ERROR RESPONSE", "No se ha podido conectar con Ollama. \nAsegúrese de que está instalado y/o configure el servidor en el menú de opciones. \nCódigo de error: ")
 	spanish_translation.add_message("EMPTY", "El promp está vacío")
 	spanish_translation.add_message("ERROR MODEL", "No hay ningún modelo seleccionado \nSeleccione uno en el menú de opciones")
+	
+	spanish_translation.add_message("INSTRUCTIONAL PROMPT","Mensaje de orientación/Instructional Prompt")
+	spanish_translation.add_message("INSTRUCTIONAL PROMPT TEXT","Una instrucción breve y clara utilizada para guiar a la IA y generar respuestas adecuadas. Por ejemplo: \nEres un traductor. Traduce esta frase del inglés al español: ")
 	
 	TranslationServer.add_translation(spanish_translation)
 

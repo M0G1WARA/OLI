@@ -47,7 +47,7 @@ func _on_http_request_request_completed(_result, response_code, _headers, body):
 	$VBoxContainer/SendButton/ProgressBar.hide()
 
 func _on_prompt_text_changed():
-	data["prompt"] = $VBoxContainer/Prompt.text
+	data["prompt"] = Global.settings["prompt"]["instructional prompt"] + $VBoxContainer/Prompt.text
 
 
 func _on_send_button_pressed():

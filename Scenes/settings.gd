@@ -53,6 +53,8 @@ func load_interface_settings():
 	$TabContainer/Interface/MarginContainer/VBoxContainer/ThinkCheckButton.button_pressed = Global.settings["interface"]["think"]
 	
 
+func load_prompt_settings():
+	$TabContainer/Prompt/MarginContainer/VBoxContainer/InstructionalPromptText.text = Global.settings["prompt"]["instructional prompt"]
 
 func _on_save_button_pressed():
 	Global.settings["ollama"]["model"] = $TabContainer/Ollama/MarginContainer/VBoxContainer/ItemList.get_item_text($TabContainer/Ollama/MarginContainer/VBoxContainer/ItemList.get_selected_items()[0])if $TabContainer/Ollama/MarginContainer/VBoxContainer/ItemList.get_selected_items().size() > 0 else ""
@@ -89,3 +91,9 @@ func _on_scale_h_slider_value_changed(value):
 func _on_draw():
 	$TabContainer/Ollama/HTTPRequest.request(Global.settings["ollama"]["server"]+"api/tags")
 	load_interface_settings()
+	load_prompt_settings()
+
+
+func _on_save_prompt_button_pressed():
+	Global.settings["prompt"]["instructional prompt"] = $TabContainer/Prompt/MarginContainer/VBoxContainer/InstructionalPromptText.text
+	Global.save_config()
