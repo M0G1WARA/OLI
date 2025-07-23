@@ -19,6 +19,14 @@ var settings = {
 	},
 	"prompt": {
 		"instructional prompt": ""
+	},
+	"tts":{
+		"status": false,
+		"id": "",
+		"volume": 50,
+		"pitch": 1.0,
+		"rate": 1.0,
+		"text": "",
 	}
 }
 
@@ -46,6 +54,14 @@ func _ready():
 	english_translation.add_message("COMPLETE RESPONSE", "Complete response")
 	english_translation.add_message("THINK", "Think: ")
 	english_translation.add_message("RESPONSE", "Response: ")
+	english_translation.add_message("TTS STATUS", "Responses with TTS(Text To Speech)")
+	english_translation.add_message("RATE", "Rate ")
+	english_translation.add_message("PITCH", "Pitch ")
+	english_translation.add_message("VOLUME", "Volume ")
+	english_translation.add_message("TEST VOICE", "Test voice")
+	english_translation.add_message("VOICES LIST EMPTY", "Si eres usuario linux, tu sistema necesita bibliotecas (speech-dispatcher festival espeakup) para que TTS funcione.")
+	english_translation.add_message("ERROR EMPTY TEXT", "Text is empty")
+	english_translation.add_message("ERROR SELECTED VOICE", "Select a voice from the list")
 	english_translation.add_message("SAVE", "Save")
 	
 	english_translation.add_message("ERROR JSON", "JSON parse error: ")
@@ -81,6 +97,14 @@ func _ready():
 	spanish_translation.add_message("COMPLETE RESPONSE", "Respuesta completa")
 	spanish_translation.add_message("THINK", "Pensamiento: ")
 	spanish_translation.add_message("RESPONSE", "Respuesta: ")
+	spanish_translation.add_message("TTS STATUS", "Respuestas con TTS (Texto a Voz)")
+	spanish_translation.add_message("RATE", "Velocidad")
+	spanish_translation.add_message("PITCH", "Tono")
+	spanish_translation.add_message("VOLUME", "Volumen")
+	spanish_translation.add_message("TEST VOICE", "Probar voz")
+	spanish_translation.add_message("VOICES LIST EMPTY", "Si eres usuario de Linux, tu sistema necesita bibliotecas (speech-dispatcher, festival, espeakup) para que TTS funcione.")
+	spanish_translation.add_message("ERROR EMPTY TEXT", "El texto está vacío")
+	spanish_translation.add_message("ERROR SELECTED VOICE", "Selecciona una voz de la lista")
 	spanish_translation.add_message("SAVE", "Guardar")
 	
 	spanish_translation.add_message("ERROR JSON", "Error al analizar JSON: ")

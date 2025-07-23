@@ -67,6 +67,9 @@ func response_by_chunk():
 				else:
 					$AcceptDialog.dialog_text = tr("ERROR JSON") +json.error
 		
+		if Global.settings["tts"]["status"]:
+			DisplayServer.tts_speak($VBoxContainer/Response.text,Global.settings["tts"]["id"],Global.settings["tts"]["volume"],Global.settings["tts"]["pitch"],Global.settings["tts"]["rate"])
+		
 		http_client.close()
 		$VBoxContainer/SendButton.disabled = false
 		$VBoxContainer/SendButton/ProgressBar.hide()
@@ -104,6 +107,8 @@ func _on_http_request_request_completed(_result, response_code, _headers, body):
 					$AcceptDialog.dialog_text = tr("ERROR JSON") + str(json.get_error_message())
 					$AcceptDialog.show()
 				
+		if Global.settings["tts"]["status"]:
+							DisplayServer.tts_speak($VBoxContainer/Response.text,Global.settings["tts"]["id"],Global.settings["tts"]["volume"],Global.settings["tts"]["pitch"],Global.settings["tts"]["rate"])
 	else:
 		$AcceptDialog.dialog_text = tr("ERROR RESPONSE") + str(response_code)
 		$AcceptDialog.show()

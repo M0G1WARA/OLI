@@ -94,8 +94,83 @@ func _on_draw():
 	$TabContainer/Ollama/HTTPRequest.request(Global.settings["ollama"]["server"]+"api/tags")
 	load_interface_settings()
 	load_prompt_settings()
+	load_tts_settings()
 
 
 func _on_save_prompt_button_pressed():
 	Global.settings["prompt"]["instructional prompt"] = $TabContainer/Prompt/MarginContainer/VBoxContainer/InstructionalPromptText.text
+	Global.save_config()
+
+
+func load_tts_settings():
+	var voices = DisplayServer.tts_get_voices()
+	
+	if voices.size() > 0:
+		
+		var voices_list = $TabContainer/TTS/MarginContainer/VBoxContainer/VoicesItemList
+		
+		voices_list.clear()
+		
+		for voice in voices:
+			var index = voices_list.add_item(voice["name"])
+			voices_list.set_item_metadata(index, voice["id"])
+		
+		for i in range($TabContainer/TTS/MarginContainer/VBoxContainer/VoicesItemList.get_item_count()):
+			if $TabContainer/TTS/MarginContainer/VBoxContainer/VoicesItemList.get_item_metadata(i) == Global.settings["tts"]["id"]:
+				$TabContainer/TTS/MarginContainer/VBoxContainer/VoicesItemList.select(i)
+				break
+		
+		$TabContainer/TTS/MarginContainer/VBoxContainer/CheckButton.button_pressed = Global.settings["tts"]["status"]
+		$TabContainer/TTS/MarginContainer/VBoxContainer/RateHSlider.value = Global.settings["tts"]["rate"]
+		$TabContainer/TTS/MarginContainer/VBoxContainer/PitchHSlider.value = Global.settings["tts"]["pitch"]
+		$TabContainer/TTS/MarginContainer/VBoxContainer/VolumeHSlider.value = Global.settings["tts"]["volume"]
+		$TabContainer/TTS/MarginContainer/VBoxContainer/TextEdit.text = Global.settings["tts"]["text"] if Global.settings["tts"]["text"] != "" else "Hello"
+	
+	else:
+		$TabContainer/TTS/MarginContainer/VBoxContainer/CheckButton.disabled
+		$TabContainer/TTS/MarginContainer/VBoxContainer/EmptyVoicesListLabel.show()
+		$TabContainer/TTS/MarginContainer/VBoxContainer/HBoxContainer.hide()
+		$TabContainer/TTS/MarginContainer/VBoxContainer/RateHSlider.hide()
+		$TabContainer/TTS/MarginContainer/VBoxContainer/HBoxContainer2.hide()
+		$TabContainer/TTS/MarginContainer/VBoxContainer/PitchHSlider.hide()
+		$TabContainer/TTS/MarginContainer/VBoxContainer/HBoxContainer3.hide()
+		$TabContainer/TTS/MarginContainer/VBoxContainer/VolumeHSlider.hide()
+
+func _on_test_voice_button_pressed() -> void:
+	var text = $TabContainer/TTS/MarginContainer/VBoxContainer/TextEdit.text
+	var voice_selected = $TabContainer/TTS/MarginContainer/VBoxContainer/VoicesItemList.get_item_metadata($TabContainer/TTS/MarginContainer/VBoxContainer/VoicesItemList.get_selected_items()[0])if $TabContainer/TTS/MarginContainer/VBoxContainer/VoicesItemList.get_selected_items().size() > 0 else ""
+	var rate = $TabContainer/TTS/MarginContainer/VBoxContainer/RateHSlider.value
+	var pitch = $TabContainer/TTS/MarginContainer/VBoxContainer/PitchHSlider.value
+	var volume = $TabContainer/TTS/MarginContainer/VBoxContainer/VolumeHSlider.value
+	
+	if text == "":
+		$AcceptDialog.dialog_text = tr("ERROR EMPTY TEXT")
+		$AcceptDialog.show()
+	
+	if voice_selected != "":
+		DisplayServer.tts_speak(text,voice_selected,volume,pitch,rate)
+	else:
+		$AcceptDialog.dialog_text = tr("ERROR SELECTED VOICE")
+		$AcceptDialog.show()
+
+
+func _on_rate_h_slider_value_changed(value: float) -> void:
+	$TabContainer/TTS/MarginContainer/VBoxContainer/HBoxContainer/Rate.text = str($TabContainer/TTS/MarginContainer/VBoxContainer/RateHSlider.value) + "x"
+
+
+func _on_pitch_h_slider_value_changed(value: float) -> void:
+	$TabContainer/TTS/MarginContainer/VBoxContainer/HBoxContainer2/Pitch.text = str($TabContainer/TTS/MarginContainer/VBoxContainer/PitchHSlider.value) + "x"
+
+
+func _on_volume_h_slider_value_changed(value: float) -> void:
+	$TabContainer/TTS/MarginContainer/VBoxContainer/HBoxContainer3/Volume.text = str($TabContainer/TTS/MarginContainer/VBoxContainer/VolumeHSlider.value) + "%" 
+
+
+func _on_save_tts_button_pressed() -> void:
+	Global.settings["tts"]["status"] = $TabContainer/TTS/MarginContainer/VBoxContainer/CheckButton.button_pressed
+	Global.settings["tts"]["id"] = $TabContainer/TTS/MarginContainer/VBoxContainer/VoicesItemList.get_item_metadata($TabContainer/TTS/MarginContainer/VBoxContainer/VoicesItemList.get_selected_items()[0])if $TabContainer/TTS/MarginContainer/VBoxContainer/VoicesItemList.get_selected_items().size() > 0 else ""
+	Global.settings["tts"]["rate"] = $TabContainer/TTS/MarginContainer/VBoxContainer/RateHSlider.value
+	Global.settings["tts"]["volume"] = $TabContainer/TTS/MarginContainer/VBoxContainer/VolumeHSlider.value
+	Global.settings["tts"]["pitch"] = $TabContainer/TTS/MarginContainer/VBoxContainer/PitchHSlider.value
+	Global.settings["tts"]["text"] =$TabContainer/TTS/MarginContainer/VBoxContainer/TextEdit.text
 	Global.save_config()
