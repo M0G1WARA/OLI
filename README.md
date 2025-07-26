@@ -15,7 +15,9 @@ An interactive desktop pet that will keep you company while you work or study. T
 ## Credits
 - Art - [Daniel Eddeland](https://opengameart.org/content/lpc-style-farm-animals)
 
-![gif](https://img.itch.zone/aW1hZ2UvMzM2MTQyMy8yMDA3MDM1NC5naWY=/original/K8B%2BNa.gif)
-![interface](https://img.itch.zone/aW1hZ2UvMzM2MTQyMy8yMDA3MDM3Ny5qcGc=/original/PKE5Yq.jpg)
+![gif](https://img.itch.zone/aW1hZ2UvMzM2MTQyMy8yMjMzOTM5NC5naWY=/original/nbRY2J.gif)
 ![ollama](https://img.itch.zone/aW1hZ2UvMzM2MTQyMy8yMDA3MDM3Ni5qcGc=/original/EQ23xC.jpg)
+![interface](https://img.itch.zone/aW1hZ2UvMzM2MTQyMy8yMjMzOTM3NS5qcGc=/original/haeKPY.jpg)
+![prompt](https://img.itch.zone/aW1hZ2UvMzM2MTQyMy8yMjMzOTM3OC5qcGc=/original/xzypau.jpg)
+![tts](https://img.itch.zone/aW1hZ2UvMzM2MTQyMy8yMjMzOTM4MS5qcGc=/original/NbqhNH.jpg)
 ![chat](https://img.itch.zone/aW1hZ2UvMzM2MTQyMy8yMDA3MDM3NS5qcGc=/original/RGTzTz.jpg)
